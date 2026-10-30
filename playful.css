@@ -1,0 +1,223 @@
+/* Two small things to play with, tucked into the notebook. */
+.portrait-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #f4f1e8;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.portrait-trigger img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.portrait-trigger:disabled { cursor: default; }
+
+.portrait-trigger:focus-visible {
+  outline: 2px dashed #796489;
+  outline-offset: 5px;
+}
+
+.portrait-hint {
+  margin: 10px 0 -4px;
+  min-height: 24px;
+  color: #7f6289;
+  text-align: center;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.portrait-trigger:disabled ~ .portrait-hint { visibility: hidden; }
+
+.portrait-sparks {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.portrait-spark {
+  position: absolute;
+  left: var(--spark-x, 50%);
+  top: var(--spark-y, 50%);
+  color: #9b7bac;
+  font: 400 20px/1 var(--hand);
+  pointer-events: none;
+  user-select: none;
+}
+
+.portrait-spark:nth-child(3n + 2) { color: #bc815a; }
+.portrait-spark:nth-child(3n + 3) { color: #71896b; }
+
+.curiosity-card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 34px;
+  padding: 26px 21px 22px;
+  border: 1px solid #ded3e2;
+  border-radius: 3px 7px 4px 2px;
+  color: #5c4e66;
+  background-color: #f0eaf1;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 31px, #8c729712 31px 32px),
+    linear-gradient(135deg, #f0e7f4, #f5f0e6);
+  box-shadow: 3px 5px 0 #6f5b7a0a, 0 12px 19px -18px #6f5b7a55;
+  break-inside: avoid;
+}
+
+.curiosity-tape {
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 30px);
+  width: 60px;
+  height: 21px;
+  background: #dfd6bda1;
+  transform: rotate(-5deg);
+  clip-path: polygon(0 6%, 98% 0, 96% 23%, 100% 54%, 97% 100%, 2% 94%, 4% 67%, 0 34%);
+}
+
+.curiosity-card > .eyebrow {
+  padding-right: 36px;
+  color: #7a6682;
+  font-size: 8px;
+  letter-spacing: .14em;
+}
+
+.curiosity-title {
+  margin-top: 8px;
+  padding-right: 35px;
+  font-size: 31px;
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.curiosity-message {
+  min-height: 180px;
+  padding-top: 20px;
+  overflow-wrap: break-word;
+}
+
+.curiosity-prompt {
+  font-family: var(--hand);
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1.12;
+  color: #5c4e66;
+}
+
+.curiosity-caption {
+  margin-top: 12px;
+  font-family: var(--hand);
+  font-size: 19px;
+  line-height: 1.25;
+  color: #75637d;
+}
+
+.curiosity-draw {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  max-width: calc(100% - 41px);
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border: 1px solid #baabc3;
+  border-radius: 3px 5px 2px 4px;
+  color: #65516f;
+  background: #fffcf975;
+  font-family: var(--hand);
+  font-size: 20px;
+  line-height: 1.1;
+  text-align: left;
+  touch-action: manipulation;
+}
+
+.curiosity-draw .icon { width: 16px; height: 16px; flex-basis: 16px; }
+.curiosity-draw:disabled { cursor: default; opacity: .6; }
+.curiosity-draw:focus-visible { outline-color: #796489; outline-offset: 4px; }
+
+.curiosity-count {
+  position: absolute;
+  right: 19px;
+  bottom: 36px;
+  color: #796781;
+  font-family: var(--body);
+  font-size: 8px;
+  letter-spacing: .04em;
+  line-height: 1;
+}
+
+.curiosity-doodle {
+  position: absolute;
+  top: 25px;
+  right: 18px;
+  width: 34px;
+  height: 43px;
+  fill: none;
+  stroke: #9b82a9;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: rotate(10deg);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portrait-trigger:not(:disabled):hover { outline: 2px dashed #b7a0c2; outline-offset: 3px; }
+  .portrait-trigger:not(:disabled):hover ~ .portrait-hint { color: #695078; }
+  .curiosity-draw:not(:disabled):hover { background: #fffcf9; border-color: #9881a3; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .portrait-hint { transition: color 200ms; }
+  .curiosity-draw {
+    transition: transform 220ms ease, background-color 220ms, box-shadow 220ms;
+  }
+  .curiosity-draw .icon { transition: transform 220ms ease; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .curiosity-draw:not(:disabled):hover {
+      transform: translateY(-2px) rotate(-1deg);
+      box-shadow: 2px 3px 0 #d8c9df70;
+    }
+    .curiosity-draw:not(:disabled):hover .icon { transform: rotate(12deg); }
+    .curiosity-draw:not(:disabled):active { transform: translateY(0); }
+  }
+}
+
+@media (min-width: 601px) and (max-width: 800px) {
+  .curiosity-card { padding-right: 17px; padding-left: 17px; }
+  .curiosity-prompt { font-size: 27px; }
+  .curiosity-message { min-height: 202px; }
+  .curiosity-draw { font-size: 18px; gap: 6px; padding-right: 8px; padding-left: 8px; }
+  .curiosity-count { right: 15px; }
+}
+
+@media (max-width: 600px) {
+  /* The intro reserves 45px for its notebook drawing; this card uses that space. */
+  .curiosity-card { width: calc(100% + 45px); max-width: none; margin-top: 28px; }
+  .curiosity-message { min-height: 190px; }
+  .curiosity-prompt { font-size: 29px; }
+  .portrait-hint { font-size: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-sparks { display: none; }
+  .curiosity-draw, .curiosity-draw .icon, .portrait-hint { transition: none; }
+}
+
+@media print {
+  .portrait-hint, .portrait-sparks, .curiosity-draw, .curiosity-count { display: none; }
+  .portrait-trigger { outline: none; }
+  .curiosity-card { width: 100%; box-shadow: none; }
+  .curiosity-message { min-height: 0; padding-bottom: 4px; }
+}

@@ -1,0 +1,351 @@
+/* A little movement in the margins. Everything is readable before JS runs. */
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.reading-progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--green);
+  transform: scaleX(var(--reading-progress, 0));
+  transform-origin: left;
+}
+
+/* Keep older hover transforms off touch screens, including sticky hover. */
+.project-card:hover .project-art,
+.project-card:nth-child(2):hover .project-art,
+.text-link:hover .icon {
+  transform: none;
+}
+
+.button-dark:hover { transform: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --motion-ease: cubic-bezier(.22, .75, .24, 1);
+    --motion-quick: 260ms;
+  }
+
+  /* Ambient motion is deliberately slow, with no more than 8px of travel. */
+  .hero.is-visible .portrait-paper {
+    animation: paper-float 5.6s ease-in-out infinite;
+    transform-origin: 50% 20%;
+  }
+
+  .hero.is-visible .portrait-sticker {
+    animation: sticker-bob 4.8s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  .hero.is-visible .portrait-star {
+    animation: margin-star 8s ease-in-out infinite;
+  }
+
+  .hero.is-visible .portrait-loop {
+    animation: margin-loop 6s ease-in-out infinite;
+  }
+
+  .hero.is-visible .small-spark {
+    display: inline-block;
+    animation: spark-turn 10s ease-in-out infinite;
+  }
+
+  .hero.is-visible .hello-wave {
+    transform-origin: 25% 80%;
+    animation: hello-nod 1.1s var(--motion-ease) 500ms 1;
+  }
+
+  .hero.is-visible .scroll-line {
+    transform-origin: top;
+    animation: scroll-breathe 2.6s ease-in-out infinite;
+  }
+
+  .about.is-visible .note-flower {
+    transform-origin: 50% 90%;
+    animation: flower-sway 6s ease-in-out infinite;
+  }
+
+  .notes.is-visible .notebook-doodle {
+    transform-origin: 50% 80%;
+    animation: notebook-rock 8s ease-in-out infinite;
+  }
+
+  .motto.is-visible .motto-star {
+    animation: motto-star-turn 11s ease-in-out infinite;
+  }
+
+  .motto.is-visible .motto-orbit {
+    animation: motto-orbit-drift 9s ease-in-out infinite;
+  }
+
+  :is(.hero, .section).is-visible .margin-mark {
+    display: inline-block;
+    transform-origin: center;
+    animation: margin-twinkle 5.8s ease-in-out infinite;
+  }
+
+  .work.is-visible .project-sketch {
+    animation: diagram-bob 6.4s ease-in-out infinite;
+  }
+
+  .work.is-visible .agent-art .project-sketch { animation-delay: -2.7s; }
+
+  .work.is-visible .agent-art .sketch-line > path[stroke-dasharray] {
+    animation: connection-flow 2s linear infinite;
+  }
+
+  .work.is-visible .kernel-art .sketch-line > ellipse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: idea-pulse 3.8s ease-in-out infinite;
+  }
+
+  /* Draw once on entry; SVG strokes have their normal appearance at rest. */
+  .hero.is-visible .underlined > svg path,
+  .section.is-visible .underlined > svg path {
+    animation: underline-draw 1.4s var(--motion-ease) 300ms both;
+  }
+
+  .section.is-visible .circled > svg path {
+    animation: circle-draw 1.4s var(--motion-ease) 260ms both;
+  }
+
+  .hero.is-visible .underlined > svg path[pathLength='1'],
+  .section.is-visible .underlined > svg path[pathLength='1'],
+  .section.is-visible .circled > svg path[pathLength='1'] {
+    animation-name: normalized-line-draw;
+  }
+
+  .motto.is-visible .underlined > svg path { animation-delay: 600ms; }
+
+  .button,
+  .nav-motto,
+  .back-top,
+  .toolkit-items > span {
+    transition: transform var(--motion-quick) var(--motion-ease),
+      box-shadow var(--motion-quick) var(--motion-ease),
+      background-color var(--motion-quick), color var(--motion-quick);
+  }
+
+  .button { position: relative; overflow: hidden; isolation: isolate; }
+
+  .button-dark::after {
+    content: '';
+    position: absolute;
+    inset: -40% auto -40% -65%;
+    width: 35%;
+    background: linear-gradient(90deg, transparent, #fffdf72b, transparent);
+    transform: skewX(-18deg);
+    pointer-events: none;
+  }
+
+  .button .icon,
+  .text-link .icon,
+  .footer-github .icon,
+  .nav-motto .icon,
+  .project-info h3 .icon,
+  .project-link > span,
+  .art-corner {
+    transition: transform var(--motion-quick) var(--motion-ease);
+  }
+
+  .project-card {
+    transition: transform 350ms var(--motion-ease);
+  }
+
+  .project-art {
+    transition: transform 400ms var(--motion-ease),
+      box-shadow 400ms var(--motion-ease);
+  }
+
+  .project-sketch {
+    transition: transform 500ms var(--motion-ease);
+    transform-origin: center;
+  }
+
+  .toolkit-items > span { display: inline-block; }
+
+  .research-note { transition: background-color 250ms; }
+
+  .research-note summary h3 {
+    transition: color 200ms, transform 250ms var(--motion-ease);
+  }
+
+  .research-note[open] .note-content {
+    animation: page-peek 360ms var(--motion-ease);
+  }
+
+  .expand-mark::after {
+    transition: transform 300ms var(--motion-ease);
+  }
+
+  .button:focus-visible .icon { transform: translateX(3px); }
+
+  .project-card:focus-visible .project-art {
+    box-shadow: 4px 8px 0 #d8ddcc70;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .button-dark:hover {
+      transform: translateY(-3px) rotate(-.4deg);
+      box-shadow: 4px 5px 0 #cad2c2;
+    }
+
+    .button-dark:hover::after { animation: button-sheen 650ms ease-out; }
+    .button:hover .icon { transform: translateX(4px); }
+    .button:active { transform: translateY(0); }
+
+    .text-link:hover .icon,
+    .footer-github:hover .icon,
+    .nav-motto:hover .icon {
+      transform: translate(3px, -3px);
+    }
+
+    .nav-motto:hover { transform: translateY(-2px) rotate(-.5deg); }
+    .project-card:hover { transform: translateY(-4px); }
+
+    .project-card:hover .project-art {
+      transform: rotate(-.5deg);
+      box-shadow: 5px 9px 0 #e0e3d590;
+    }
+
+    .project-card:nth-child(2):hover .project-art { transform: rotate(.5deg); }
+    .project-card:hover .project-sketch { transform: translateY(-3px) scale(1.025); }
+
+    .project-card:hover .art-corner,
+    .project-card:hover .project-info h3 .icon,
+    .project-card:hover .project-link > span {
+      transform: translate(3px, -3px);
+    }
+
+    .toolkit-items > span:hover { transform: translateY(-3px) rotate(-2deg); color: var(--green); }
+    .toolkit-items > span:nth-child(even):hover { transform: translateY(-3px) rotate(2deg); }
+    .research-note summary:hover h3 { transform: translateX(3px); }
+    .back-top:hover { transform: translateY(-4px) rotate(-5deg); box-shadow: 0 4px 0 #dce1d080; }
+    .wordmark:hover > svg { animation: wordmark-nudge 450ms var(--motion-ease); }
+  }
+
+  @keyframes paper-float {
+    0%, 100% { transform: translateY(0) rotate(4deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+
+  @keyframes sticker-bob {
+    0%, 100% { translate: 0 0; rotate: 0deg; }
+    50% { translate: 0 -5px; rotate: 3deg; }
+  }
+
+  @keyframes margin-twinkle {
+    0%, 100% { scale: 1; rotate: -8deg; opacity: .8; }
+    50% { scale: 1.12; rotate: 12deg; opacity: 1; }
+  }
+
+  @keyframes diagram-bob {
+    0%, 100% { translate: 0 0; rotate: -.5deg; }
+    50% { translate: 0 -4px; rotate: .5deg; }
+  }
+
+  @keyframes idea-pulse {
+    0%, 100% { scale: .97; }
+    50% { scale: 1.06; }
+  }
+
+  @keyframes margin-star {
+    0%, 100% { transform: rotate(8deg) scale(1); }
+    50% { transform: rotate(24deg) scale(1.06); }
+  }
+
+  @keyframes margin-loop {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-3px) rotate(-4deg); }
+  }
+
+  @keyframes spark-turn {
+    0%, 65%, 100% { transform: rotate(0); }
+    80% { transform: rotate(35deg); }
+  }
+
+  @keyframes hello-nod {
+    0%, 100% { transform: rotate(17deg); }
+    30% { transform: rotate(-8deg); }
+    55% { transform: rotate(24deg); }
+    75% { transform: rotate(10deg); }
+  }
+
+  @keyframes scroll-breathe {
+    0%, 100% { transform: scaleY(1); opacity: .85; }
+    50% { transform: scaleY(.65); opacity: .45; }
+  }
+
+  @keyframes flower-sway {
+    0%, 100% { transform: rotate(12deg); }
+    50% { transform: rotate(5deg); }
+  }
+
+  @keyframes notebook-rock {
+    0%, 100% { transform: rotate(-7deg); }
+    50% { transform: rotate(-4deg); }
+  }
+
+  @keyframes motto-star-turn {
+    0%, 100% { rotate: 0deg; scale: 1; }
+    50% { rotate: 18deg; scale: 1.06; }
+  }
+
+  @keyframes motto-orbit-drift {
+    0%, 100% { translate: 0 0; rotate: 0deg; }
+    50% { translate: 0 -5px; rotate: -5deg; }
+  }
+
+  @keyframes underline-draw {
+    from { stroke-dasharray: 540; stroke-dashoffset: 540; }
+    to { stroke-dasharray: 540; stroke-dashoffset: 0; }
+  }
+
+  @keyframes circle-draw {
+    from { stroke-dasharray: 480; stroke-dashoffset: 480; }
+    to { stroke-dasharray: 480; stroke-dashoffset: 0; }
+  }
+
+  @keyframes normalized-line-draw {
+    from { stroke-dasharray: 1; stroke-dashoffset: 1; }
+    to { stroke-dasharray: 1; stroke-dashoffset: 0; }
+  }
+
+  @keyframes page-peek {
+    from { opacity: .25; transform: translateY(-7px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes button-sheen {
+    from { transform: skewX(-18deg) translateX(0); }
+    to { transform: skewX(-18deg) translateX(550%); }
+  }
+
+  @keyframes connection-flow { to { stroke-dashoffset: -22; } }
+
+  @keyframes wordmark-nudge {
+    0%, 100% { transform: scaleX(1); }
+    45% { transform: scaleX(.88); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress { display: none; }
+  .hero .underlined > svg path,
+  .section .underlined > svg path,
+  .section .circled > svg path { stroke-dasharray: none; stroke-dashoffset: 0; }
+}
+
+@media print {
+  .reading-progress { display: none; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .hero .underlined > svg path,
+  .section .underlined > svg path,
+  .section .circled > svg path { stroke-dasharray: none; stroke-dashoffset: 0; }
+}
